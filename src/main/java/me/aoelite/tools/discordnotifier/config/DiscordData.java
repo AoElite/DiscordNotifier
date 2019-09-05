@@ -2,11 +2,11 @@ package me.aoelite.tools.discordnotifier.config;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DiscordData {
 
-    private int maxThreads = 4;
     private ConcurrentHashMap<String, String> webHooks = new ConcurrentHashMap<>();
 
     private JsonObject notifyJson = new JsonParser().parse("{\"embeds\":[{\"title\": \"Discord Notification from %sender%\",\"description\": \"%message%\"}]}").getAsJsonObject();
@@ -22,6 +22,8 @@ public class DiscordData {
     public ConcurrentHashMap<String, String> getWebHooks() {
         return webHooks;
     }
+
+    private int maxThreads = 4;
 
     private int configVersion = 1;
 

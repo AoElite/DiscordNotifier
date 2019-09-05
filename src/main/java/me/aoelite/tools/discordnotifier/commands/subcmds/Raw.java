@@ -7,7 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Raw implements SubCommand {
@@ -18,7 +17,7 @@ public class Raw implements SubCommand {
 
     @Override
     public String description() {
-        return "&b<channelid> <raw-json> Sends json to a discord channel.";
+        return "&b<channel id> <raw-json> &7Sends json to a channel";
     }
 
     private DiscordNotifier notifier;

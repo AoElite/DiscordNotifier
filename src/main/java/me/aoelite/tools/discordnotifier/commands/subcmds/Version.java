@@ -2,7 +2,6 @@ package me.aoelite.tools.discordnotifier.commands.subcmds;
 
 import me.aoelite.tools.discordnotifier.DiscordNotifier;
 import me.aoelite.tools.discordnotifier.commands.SubCommand;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
@@ -23,7 +22,7 @@ public class Version implements SubCommand {
 
     @Override
     public String description() {
-        return "Checks if the plugin is up to date.";
+        return "&7Checks if the plugin is updated.";
     }
 
     private DiscordNotifier notifier;
@@ -35,10 +34,9 @@ public class Version implements SubCommand {
     public void onCommand(CommandSender sender, String[] args) {
         notifier.getMessenger().getExecutor().execute(() -> {
             try {
-                final double latest = Double.parseDouble(getRaw("https://pastebin.com/raw/W0Ak57KE").get(0));
+                final double latest = Double.parseDouble(getPasteBin().get(0));
                 sender.spigot().sendMessage(DiscordNotifier.getPrefix().append("Checking version...").create());
                 notifier.getServer().getScheduler().runTask(notifier, () -> {
-                    if (sender == null) return;
                     if (DiscordNotifier.getVersion() >= latest) {
                         sender.spigot().sendMessage(DiscordNotifier.getPrefix().append("Plugin is updated.")
                                .create());
@@ -48,7 +46,7 @@ public class Version implements SubCommand {
                     }
                 });
             } catch (Exception e) {
-                sender.spigot().sendMessage(DiscordNotifier.getPrefix().append("A error occured while trying to check versions.").create());
+                sender.spigot().sendMessage(DiscordNotifier.getPrefix().append("A error occurred while trying to check versions.").create());
                 Bukkit.getServer().getConsoleSender().spigot().sendMessage(DiscordNotifier.getPrefix()
                         .append(e.getMessage())
                         .create());
@@ -56,17 +54,16 @@ public class Version implements SubCommand {
         });
     }
 
-
-    private List<String> getRaw(String url) {
+    private List<String> getPasteBin() {
         List<String> list = new ArrayList<>();
         try {
-            URL uri = new URL(url);
+            URL uri = new URL("https://pastebin.com/raw/W0Ak57KE");
             Scanner s = new Scanner(uri.openStream());
             while (s.hasNextLine()) {
                 list.add(s.nextLine());
             }
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
         return list;
     }

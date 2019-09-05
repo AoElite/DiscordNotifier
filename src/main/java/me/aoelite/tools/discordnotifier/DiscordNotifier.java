@@ -21,9 +21,10 @@ public final class DiscordNotifier extends JavaPlugin {
 
     public static ComponentBuilder getPrefix() {
         return new ComponentBuilder("")
-                .append("[").color(ChatColor.GRAY)
+                .append("[").color(ChatColor.DARK_GRAY)
                 .append("DiscordNotifier").color(ChatColor.AQUA)
-                .append("] ").color(ChatColor.GRAY);
+                .append("]").color(ChatColor.DARK_GRAY)
+                .append(" ").color(ChatColor.GRAY);
     }
 
     public static double getVersion() {
@@ -53,7 +54,8 @@ public final class DiscordNotifier extends JavaPlugin {
             discordData = jsonConfig.getObject("config.json", DiscordData.class);
         } else {
             discordData = new DiscordData();
-            discordData.getWebHooks().put("channel id goes here", "webhook link goes here");
+            discordData.getWebHooks().put("example", "webhook url");
+            discordData.getWebHooks().put("example2", "webhook url 2 etc");
             jsonConfig.write("config.json", discordData);
         }
         messenger.reload(discordData);

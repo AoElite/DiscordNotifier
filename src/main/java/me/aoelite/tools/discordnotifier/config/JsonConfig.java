@@ -14,13 +14,11 @@ public class JsonConfig {
 
     public JsonConfig(JavaPlugin javaPlugin) {
         plugininstance = javaPlugin;
-        this.rootpath = plugininstance.getDataFolder().getPath();
         pluginpath = plugininstance.getDataFolder().getPath();
     }
 
     private JavaPlugin plugininstance;
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private String rootpath;
     private String pluginpath;
 
 

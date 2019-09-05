@@ -21,16 +21,15 @@ public class Help implements SubCommand {
 
     @Override
     public String description() {
-        return "Lists commands.";
+        return "&7Lists commands.";
     }
 
     @Override
     public void onCommand(CommandSender sender, String[] args) {
         ComponentBuilder builder = DiscordNotifier.getPrefix()
-                .append("Commands: ").color(ChatColor.GRAY)
-                .append("\n");
+                .append("Commands: ").color(ChatColor.GRAY);
 
-        main.getSubcmds().forEach((s, cmd) -> builder.color(ChatColor.GRAY).append("/").color(ChatColor.AQUA)
+        main.getSubcmds().forEach((s, cmd) -> builder.append("\n").color(ChatColor.AQUA).append("/dn ")
                 .append(s).append(" " + ChatColor.translateAlternateColorCodes('&', cmd.description())));
 
         sender.spigot().sendMessage(builder.create());

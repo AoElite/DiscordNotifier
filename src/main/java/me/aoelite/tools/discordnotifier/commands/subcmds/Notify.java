@@ -1,6 +1,5 @@
 package me.aoelite.tools.discordnotifier.commands.subcmds;
 
-import me.aoelite.tools.discordnotifier.DiscordMessenger;
 import me.aoelite.tools.discordnotifier.DiscordNotifier;
 import me.aoelite.tools.discordnotifier.commands.SubCommand;
 import org.bukkit.Bukkit;
@@ -19,7 +18,7 @@ public class Notify implements SubCommand {
 
     @Override
     public String description() {
-        return "&b<channelid> <message> &7Sends a message to discord channel.";
+        return "&b<channel id> <message> &7Sends a message to a channel.";
     }
 
     private DiscordNotifier notifier;

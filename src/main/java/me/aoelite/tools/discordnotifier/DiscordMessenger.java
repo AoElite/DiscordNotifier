@@ -78,8 +78,8 @@ public class DiscordMessenger {
                 wr.writeBytes(json);
                 wr.flush();
                 wr.close();
-                int responseCode = connection.getResponseCode();
-                if (responseCode != 200)  {
+                final int responseCode = connection.getResponseCode();
+                if (!(responseCode == 200 || responseCode == 201 || responseCode == 204))  {
                     Bukkit.getServer().getConsoleSender().spigot().sendMessage(DiscordNotifier.getPrefix()
                             .append("Message was not sent. Response code: " + responseCode)
                             .create());

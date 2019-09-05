@@ -12,7 +12,7 @@ public class Reload implements SubCommand {
 
     @Override
     public String description() {
-        return "Reloads the config.";
+        return "&7Reloads the config.";
     }
 
     private DiscordNotifier notifier;
