@@ -3,6 +3,7 @@ package me.aoelite.tools.discordnotifier;
 import me.aoelite.tools.discordnotifier.commands.DiscordNotiferCmd;
 import me.aoelite.tools.discordnotifier.config.DiscordData;
 import me.aoelite.tools.discordnotifier.config.JsonConfig;
+import me.aoelite.tools.discordnotifier.utils.SenderUtil;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Bukkit;
@@ -41,7 +42,8 @@ public final class DiscordNotifier extends JavaPlugin {
         messenger = new DiscordMessenger(discordData);
         reloadConfig();
         new DiscordNotiferCmd(this);
-        Bukkit.getConsoleSender().spigot().sendMessage(getPrefix()
+
+        SenderUtil.sendMessage(Bukkit.getConsoleSender(), getPrefix()
                 .append("Has successfully loaded.").color(ChatColor.GRAY)
                 .append(" (Created by ").color(ChatColor.GRAY)
                 .append("AoElite").color(ChatColor.AQUA)

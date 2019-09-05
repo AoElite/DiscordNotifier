@@ -1,6 +1,7 @@
 package me.aoelite.tools.discordnotifier;
 
 import me.aoelite.tools.discordnotifier.config.DiscordData;
+import me.aoelite.tools.discordnotifier.utils.SenderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
@@ -40,9 +41,11 @@ public class DiscordMessenger {
             try {
                 return future.get(30, TimeUnit.SECONDS);
             } catch (InterruptedException | ExecutionException | TimeoutException e) {
-                Bukkit.getServer().getConsoleSender().spigot().sendMessage(DiscordNotifier.getPrefix()
+
+                SenderUtil.sendMessage(Bukkit.getConsoleSender(), DiscordNotifier.getPrefix()
                         .append(e.getMessage())
                         .create());
+
                 return false;
             }
         });
@@ -50,7 +53,7 @@ public class DiscordMessenger {
 
     public CompletableFuture<Boolean> sendMessageById(String id, String json, CommandSender sender) {
         if (!webhooks.containsKey(id)) {
-            sender.spigot().sendMessage(DiscordNotifier.getPrefix()
+            SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix()
                     .append("The channel ID is not registered. Check your config & reload it.").create());
             return CompletableFuture.completedFuture(false);
         }
@@ -80,13 +83,14 @@ public class DiscordMessenger {
                 wr.close();
                 final int responseCode = connection.getResponseCode();
                 if (!(responseCode == 200 || responseCode == 201 || responseCode == 204))  {
-                    Bukkit.getServer().getConsoleSender().spigot().sendMessage(DiscordNotifier.getPrefix()
+
+                    SenderUtil.sendMessage(Bukkit.getConsoleSender(), DiscordNotifier.getPrefix()
                             .append("Message was not sent. Response code: " + responseCode)
                             .create());
                     return false;
                 }
             } catch (IOException e) {
-                Bukkit.getServer().getConsoleSender().spigot().sendMessage(DiscordNotifier.getPrefix()
+                SenderUtil.sendMessage(Bukkit.getConsoleSender(), DiscordNotifier.getPrefix()
                         .append(e.getMessage())
                         .create());
                 return false;

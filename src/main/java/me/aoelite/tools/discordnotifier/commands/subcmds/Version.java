@@ -2,6 +2,7 @@ package me.aoelite.tools.discordnotifier.commands.subcmds;
 
 import me.aoelite.tools.discordnotifier.DiscordNotifier;
 import me.aoelite.tools.discordnotifier.commands.SubCommand;
+import me.aoelite.tools.discordnotifier.utils.SenderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
@@ -35,19 +36,19 @@ public class Version implements SubCommand {
         notifier.getMessenger().getExecutor().execute(() -> {
             try {
                 final double latest = Double.parseDouble(getPasteBin().get(0));
-                sender.spigot().sendMessage(DiscordNotifier.getPrefix().append("Checking version...").create());
+                SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix().append("Checking version...").create());
                 notifier.getServer().getScheduler().runTask(notifier, () -> {
                     if (DiscordNotifier.getVersion() >= latest) {
-                        sender.spigot().sendMessage(DiscordNotifier.getPrefix().append("Plugin is updated.")
+                        SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix().append("Plugin is up to date.")
                                .create());
                     } else {
-                        sender.spigot().sendMessage(DiscordNotifier.getPrefix().append("Plugin is outdated.")
+                        SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix().append("Plugin is outdated.")
                                 .create());
                     }
                 });
             } catch (Exception e) {
-                sender.spigot().sendMessage(DiscordNotifier.getPrefix().append("A error occurred while trying to check versions.").create());
-                Bukkit.getServer().getConsoleSender().spigot().sendMessage(DiscordNotifier.getPrefix()
+                SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix().append("A error occurred while trying to check versions.").create());
+                SenderUtil.sendMessage(Bukkit.getConsoleSender(), DiscordNotifier.getPrefix()
                         .append(e.getMessage())
                         .create());
             }

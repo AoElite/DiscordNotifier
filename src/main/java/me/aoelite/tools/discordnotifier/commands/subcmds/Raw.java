@@ -2,6 +2,7 @@ package me.aoelite.tools.discordnotifier.commands.subcmds;
 
 import me.aoelite.tools.discordnotifier.DiscordNotifier;
 import me.aoelite.tools.discordnotifier.commands.SubCommand;
+import me.aoelite.tools.discordnotifier.utils.SenderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -28,7 +29,7 @@ public class Raw implements SubCommand {
     @Override
     public void onCommand(CommandSender sender, String[] args) {
         if (args.length <= 2) {
-            sender.spigot().sendMessage(DiscordNotifier.getPrefix()
+            SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix()
                     .append("/discordnotifer raw <channelid> <json>")
                     .create());
             return;
@@ -40,9 +41,9 @@ public class Raw implements SubCommand {
         json = json.replaceAll("%uuid%", uuid);
         notifier.getMessenger().sendMessageById(channel, json, sender).thenAccept(bol -> Bukkit.getScheduler().runTask(notifier, () -> {
             if (bol) {
-                sender.spigot().sendMessage(DiscordNotifier.getPrefix().append("Message was sent successfully.").create());
+                SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix().append("Message was sent successfully.").create());
             } else {
-                sender.spigot().sendMessage(DiscordNotifier.getPrefix().append("A error occurred. Check console.").create());
+                SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix().append("A error occurred. Check console.").create());
             }
         }));
     }

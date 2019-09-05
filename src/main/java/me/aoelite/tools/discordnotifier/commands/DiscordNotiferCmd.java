@@ -2,6 +2,7 @@ package me.aoelite.tools.discordnotifier.commands;
 
 import me.aoelite.tools.discordnotifier.DiscordNotifier;
 import me.aoelite.tools.discordnotifier.commands.subcmds.*;
+import me.aoelite.tools.discordnotifier.utils.SenderUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -44,10 +45,10 @@ public class DiscordNotiferCmd implements CommandExecutor, TabCompleter {
           if (sender.hasPermission(sub.permission())) {
               sub.onCommand(sender, args);
           } else {
-              sender.spigot().sendMessage(DiscordNotifier.getPrefix().append("Invalid permissions.").create());
+              SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix().append("Invalid permissions.").create());
           }
         } else {
-            sender.spigot().sendMessage(DiscordNotifier.getPrefix().append("Invalid command.").create());
+            SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix().append("Invalid command.").create());
         }
         return true;
     }

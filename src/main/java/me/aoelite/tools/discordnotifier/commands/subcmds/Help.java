@@ -5,6 +5,7 @@ import me.aoelite.tools.discordnotifier.commands.DiscordNotiferCmd;
 import me.aoelite.tools.discordnotifier.commands.SubCommand;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 
 public class Help implements SubCommand {
@@ -32,6 +33,6 @@ public class Help implements SubCommand {
         main.getSubcmds().forEach((s, cmd) -> builder.append("\n").color(ChatColor.AQUA).append("/dn ")
                 .append(s).append(" " + ChatColor.translateAlternateColorCodes('&', cmd.description())));
 
-        sender.spigot().sendMessage(builder.create());
+       sender.sendMessage(TextComponent.toLegacyText(builder.create()));
     }
 }

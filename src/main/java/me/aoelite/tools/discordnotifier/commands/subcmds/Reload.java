@@ -2,6 +2,7 @@ package me.aoelite.tools.discordnotifier.commands.subcmds;
 
 import me.aoelite.tools.discordnotifier.DiscordNotifier;
 import me.aoelite.tools.discordnotifier.commands.SubCommand;
+import me.aoelite.tools.discordnotifier.utils.SenderUtil;
 import org.bukkit.command.CommandSender;
 
 public class Reload implements SubCommand {
@@ -23,6 +24,6 @@ public class Reload implements SubCommand {
     @Override
     public void onCommand(CommandSender sender, String[] args) {
         notifier.reloadConfig();
-        sender.spigot().sendMessage(DiscordNotifier.getPrefix().append("Config has been reloaded.").create());
+        SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix().append("Config has been reloaded.").create());
     }
 }
