@@ -1,0 +1,12 @@
+name: DiscordNotifier
+version: 1.0
+main: me.aoelite.tools.discordnotifier.DiscordNotifier
+authors: [AoElite]
+description: Notifies people on discord
+commands:
+  discordnotifier:
+    description: DiscordNotifier commands
+    usage: /discordnotifier <cmd>
+  dn:
+    description: Shorter version of /discordnotifier
+    usage: /dn <cmd>
