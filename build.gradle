@@ -30,17 +30,3 @@ processResources {
         filter ReplaceTokens, tokens: [version: version]
     }
 }
-
-jar {
-    destinationDir = file("C:\\Users\\roxie\\Desktop\\Server4\\plugins")
-    archiveName = "DiscordNotifier.jar"
-    manifest {
-        attributes(
-                'Author': 'AoElite',
-        )
-    }
-
-    from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-}
