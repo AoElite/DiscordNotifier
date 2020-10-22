@@ -3,6 +3,7 @@ version: 1.0
 main: me.aoelite.tools.discordnotifier.DiscordNotifier
 authors: [AoElite]
 description: Notifies people on discord
+softdepend: [PlaceholderAPI]
 commands:
   discordnotifier:
     description: DiscordNotifier commands

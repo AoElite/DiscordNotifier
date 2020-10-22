@@ -19,10 +19,10 @@ public class Notify implements SubCommand {
 
     @Override
     public String description() {
-        return "&b<channel id> <message> &7Sends a message to a channel.";
+        return "&b<key> <message> &7Sends a message to a channel.";
     }
 
-    private DiscordNotifier notifier;
+    private final DiscordNotifier notifier;
     public Notify(DiscordNotifier notifier) {
         this.notifier = notifier;
     }
@@ -31,7 +31,7 @@ public class Notify implements SubCommand {
     public void onCommand(CommandSender sender, String[] args) {
         if (args.length <= 2) {
             SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix()
-                    .append("/discordnotifer notify <channelid> <message>")
+                    .append("/discordnotifer notify <key> <message>")
                     .create());
             return;
         }
@@ -39,14 +39,14 @@ public class Notify implements SubCommand {
         String message = Arrays.stream(args).skip(2).collect(Collectors.joining(" "));
         String json = notifier.getDiscordData().getNotifyJson();
         String uuid = sender instanceof Player ? ((Player)sender).getUniqueId().toString() : "null";
-        json = json.replaceAll("%message%", message);
-        json = json.replaceAll("%sender%", sender.getName());
+        json = json.replaceAll("%message%", message.replace("_", "\\_"));
+        json = json.replaceAll("%sender%", sender.getName().replace("_", "\\_"));
         json = json.replaceAll("%uuid%", uuid);
         notifier.getMessenger().sendMessageById(channel, json, sender).thenAccept(bol -> Bukkit.getScheduler().runTask(notifier, () -> {
             if (bol) {
-                SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix().append("Message was sent successfully.").create());
+                SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix().append("Message was sent.").create());
             } else {
-                SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix().append("Message was sent successfully.").create());
+                SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix().append("Message was not sent.").create());
             }
         }));
     }

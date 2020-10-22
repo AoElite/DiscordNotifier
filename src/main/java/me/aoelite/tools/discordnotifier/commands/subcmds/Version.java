@@ -26,21 +26,21 @@ public class Version implements SubCommand {
         return "&7Checks if the plugin is updated.";
     }
 
-    private DiscordNotifier notifier;
+    private final DiscordNotifier notifier;
     public Version(DiscordNotifier notifier) {
         this.notifier = notifier;
     }
 
     @Override
     public void onCommand(CommandSender sender, String[] args) {
-        notifier.getMessenger().getExecutor().execute(() -> {
+        Bukkit.getScheduler().runTaskAsynchronously(notifier, () -> {
             try {
                 final double latest = Double.parseDouble(getPasteBin().get(0));
                 SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix().append("Checking version...").create());
                 notifier.getServer().getScheduler().runTask(notifier, () -> {
                     if (DiscordNotifier.getVersion() >= latest) {
                         SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix().append("Plugin is up to date.")
-                               .create());
+                                .create());
                     } else {
                         SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix().append("Plugin is outdated.")
                                 .create());

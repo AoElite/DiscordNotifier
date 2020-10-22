@@ -17,10 +17,9 @@ public class JsonConfig {
         pluginpath = plugininstance.getDataFolder().getPath();
     }
 
-    private JavaPlugin plugininstance;
-    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private String pluginpath;
-
+    private final JavaPlugin plugininstance;
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private final String pluginpath;
 
     public <T> T getObject(String filename, Class<T> type) {
         return gson.fromJson(getJson(filename), type);

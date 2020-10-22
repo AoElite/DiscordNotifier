@@ -18,10 +18,10 @@ public class Raw implements SubCommand {
 
     @Override
     public String description() {
-        return "&b<channel id> <raw-json> &7Sends json to a channel";
+        return "&b<key> <raw-json> &7Sends json to a channel";
     }
 
-    private DiscordNotifier notifier;
+    private final DiscordNotifier notifier;
     public Raw(DiscordNotifier notifier) {
         this.notifier = notifier;
     }
@@ -30,7 +30,7 @@ public class Raw implements SubCommand {
     public void onCommand(CommandSender sender, String[] args) {
         if (args.length <= 2) {
             SenderUtil.sendMessage(sender, DiscordNotifier.getPrefix()
-                    .append("/discordnotifer raw <channelid> <json>")
+                    .append("/discordnotifer raw <key> <json>")
                     .create());
             return;
         }

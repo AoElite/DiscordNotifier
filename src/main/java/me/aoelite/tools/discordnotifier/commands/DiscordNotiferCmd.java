@@ -14,14 +14,14 @@ import java.util.List;
 
 public class DiscordNotiferCmd implements CommandExecutor, TabCompleter {
 
-    private HashMap<String, SubCommand> subcmds = new HashMap<>();
+    private final HashMap<String, SubCommand> subcmds = new HashMap<>();
 
     public HashMap<String, SubCommand> getSubcmds() {
         return subcmds;
     }
 
 
-    private DiscordNotifier notifier;
+    private final DiscordNotifier notifier;
 
     public DiscordNotiferCmd(DiscordNotifier plugin) {
         this.notifier = plugin;
@@ -32,6 +32,7 @@ public class DiscordNotiferCmd implements CommandExecutor, TabCompleter {
         subcmds.put("version", new Version(plugin));
         subcmds.put("notify", new Notify(plugin));
         subcmds.put("raw", new Raw(plugin));
+        subcmds.put("keys", new Keys(plugin));
     }
 
     @Override
@@ -53,14 +54,24 @@ public class DiscordNotiferCmd implements CommandExecutor, TabCompleter {
         return true;
     }
 
+    private List<String> startsWith(List<String> list, String word) {
+        List<String> avalaible = new ArrayList<>();
+        for (String s : list) {
+            if (s.startsWith(word)) avalaible.add(s);
+        }
+        return avalaible;
+    }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length <= 0) return null;
-        if (args[0].equalsIgnoreCase("")) {
-            return new ArrayList<>(subcmds.keySet());
+        List<String> cmds = new ArrayList<>(subcmds.keySet());
+        if (args.length <= 1) {
+            return startsWith(cmds, args[0]);
         }
-        if (args.length >= 2 && args.length <= 2 && (args[0].equalsIgnoreCase("notify") || args[0].equalsIgnoreCase("raw"))) {
-            return new ArrayList<>(notifier.getDiscordData().getWebHooks().keySet());
+        if (args.length == 2 && (args[0].equalsIgnoreCase("notify") || args[0].equalsIgnoreCase("raw"))) {
+            List<String> list = new ArrayList<>(notifier.getDiscordData().getWebHooks().keySet());
+            return startsWith(list, args[1]);
         }
         return null;
     }

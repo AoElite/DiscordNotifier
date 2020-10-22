@@ -14,7 +14,8 @@ public final class DiscordNotifier extends JavaPlugin {
     private DiscordMessenger messenger;
     private JsonConfig jsonConfig;
     private DiscordData discordData = new DiscordData();
-    private final static double version = 1.0;
+    private final static double version = 1.05;
+    private static DiscordNotifier instance = null;
 
     public DiscordData getDiscordData() {
         return discordData;
@@ -38,17 +39,28 @@ public final class DiscordNotifier extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
         jsonConfig = new JsonConfig(this);
         messenger = new DiscordMessenger(discordData);
         reloadConfig();
         new DiscordNotiferCmd(this);
 
+
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            //TODO: Implement PlaceHolderAPI
+        }
+
         SenderUtil.sendMessage(Bukkit.getConsoleSender(), getPrefix()
-                .append("Has successfully loaded.").color(ChatColor.GRAY)
+                .append("Discord Notifier has successfully loaded.").color(ChatColor.GRAY)
                 .append(" (Created by ").color(ChatColor.GRAY)
                 .append("AoElite").color(ChatColor.AQUA)
                 .append(")").color(ChatColor.GRAY)
                 .create());
+
+    }
+
+    public static DiscordNotifier getInstance() {
+        return instance;
     }
 
     public void reloadConfig() {
@@ -56,8 +68,9 @@ public final class DiscordNotifier extends JavaPlugin {
             discordData = jsonConfig.getObject("config.json", DiscordData.class);
         } else {
             discordData = new DiscordData();
-            discordData.getWebHooks().put("example", "webhook url");
-            discordData.getWebHooks().put("example2", "webhook url 2 etc");
+          /*  JsonObject notifyJson = new JsonParser().parse("{\"embeds\":[{\"title\": \"Discord Notification from %sender%\",\"description\": \"%message%\"}]}").getAsJsonObject();
+            discordData.getNotifyMap().put("default", notifyJson);*/
+            discordData.getWebHooks().put("key", "webhook url");
             jsonConfig.write("config.json", discordData);
         }
         messenger.reload(discordData);
@@ -65,7 +78,7 @@ public final class DiscordNotifier extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        Bukkit.getScheduler().cancelTasks(this);
     }
 
 }

@@ -9,31 +9,20 @@ public class DiscordData {
 
     private ConcurrentHashMap<String, String> webHooks = new ConcurrentHashMap<>();
 
-    private JsonObject notifyJson = new JsonParser().parse("{\"embeds\":[{\"title\": \"Discord Notification from %sender%\",\"description\": \"%message%\"}]}").getAsJsonObject();
+    private final JsonObject notifyJson = new JsonParser().parse("{\"embeds\":[{\"title\": \"Discord Notification from %sender%\",\"description\": \"%message%\"}]}").getAsJsonObject();
 
     public String getNotifyJson() {
         return notifyJson.toString();
-    }
-
-    public int getMaxThreads() {
-        return maxThreads;
     }
 
     public ConcurrentHashMap<String, String> getWebHooks() {
         return webHooks;
     }
 
-    private int maxThreads = 4;
-
-    private int configVersion = 1;
+    private int configVersion = 3;
 
     public int getConfigVersion() {
         return configVersion;
-    }
-
-    public DiscordData setMaxThreads(int maxThreads) {
-        this.maxThreads = maxThreads;
-        return this;
     }
 
     public DiscordData setWebHooks(ConcurrentHashMap<String, String> webHooks) {
@@ -45,4 +34,5 @@ public class DiscordData {
         this.configVersion = configVersion;
         return this;
     }
+
 }

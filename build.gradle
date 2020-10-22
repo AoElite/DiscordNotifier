@@ -9,6 +9,9 @@ targetCompatibility = 1.8
 repositories {
     mavenCentral()
     maven {
+        url = 'http://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
+    maven {
         name = 'spigotmc-repo'
         url = 'https://hub.spigotmc.org/nexus/content/groups/public/'
     }
@@ -19,9 +22,7 @@ repositories {
 }
 
 dependencies {
-    //compileOnly 'org.spigotmc:spigot-api:1.12-R0.1-SNAPSHOT'
     compileOnly "org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT"
-    //compileOnly group: 'org.bukkit', name: 'bukkit', version:'1.8-R0.1-SNAPSHOT'
     compileOnly fileTree(include: ['*.jar'], dir: 'lib')
 }
 
@@ -30,5 +31,19 @@ import org.apache.tools.ant.filters.ReplaceTokens
 processResources {
     from(sourceSets.main.resources.srcDirs) {
         filter ReplaceTokens, tokens: [version: version]
+    }
+}
+
+jar {
+    destinationDir = file("C:\\Users\\roxie\\Desktop\\Servers\\Server4-115\\plugins")
+    archiveName = "DiscordNotifier.jar"
+    manifest {
+        attributes(
+                'Author': 'AoElite',
+        )
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
